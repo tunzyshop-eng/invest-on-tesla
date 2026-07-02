@@ -27,100 +27,37 @@ body {
   box-shadow: 0 4px 20px rgba(0,0,0,0.4);
 }
 
-h1 {
-  text-align: center;
-  color: #10b981;
-  margin-bottom: 4px;
-}
-
-.sub {
-  text-align: center;
-  color: #8b949e;
-  font-size: 13px;
-  margin-bottom: 24px;
-}
+h1 { text-align: center; color: #10b981; margin-bottom: 4px; }
+.sub { text-align: center; color: #8b949e; font-size: 13px; margin-bottom: 24px; }
 
 input {
-  width: 100%;
-  padding: 12px;
-  border-radius: 8px;
-  border: 1px solid #30363d;
-  background: #0d1117;
-  color: #fff;
-  font-size: 15px;
-  margin-bottom: 12px;
+  width: 100%; padding: 12px; border-radius: 8px; border: 1px solid #30363d;
+  background: #0d1117; color: #fff; font-size: 15px; margin-bottom: 12px;
 }
 
 button {
-  width: 100%;
-  padding: 12px;
-  border: none;
-  border-radius: 8px;
-  background: #10b981;
-  color: #0e1117;
-  font-weight: 700;
-  font-size: 15px;
-  cursor: pointer;
+  width: 100%; padding: 12px; border: none; border-radius: 8px;
+  background: #10b981; color: #0e1117; font-weight: 700; font-size: 15px; cursor: pointer;
 }
-
 button:hover { background: #0ea371; }
 
-.balance-display {
-  text-align: center;
-  margin: 30px 0;
-}
-
-.balance-display .label {
-  color: #8b949e;
-  font-size: 14px;
-}
-
-.balance-display .amount {
-  font-size: 44px;
-  font-weight: 800;
-  margin: 8px 0;
-}
+.balance-display { text-align: center; margin: 30px 0; }
+.balance-display .label { color: #8b949e; font-size: 14px; }
+.balance-display .amount { font-size: 44px; font-weight: 800; margin: 8px 0; }
 
 .up { color: #10b981; }
 .down { color: #ef4444; }
 
-.ticker {
-  text-align: center;
-  font-size: 13px;
-  color: #8b949e;
-  margin-bottom: 10px;
-}
+.ticker { text-align: center; font-size: 13px; color: #8b949e; margin-bottom: 10px; }
 
-table {
-  width: 100%;
-  border-collapse: collapse;
-  margin-top: 16px;
-}
+table { width: 100%; border-collapse: collapse; margin-top: 16px; }
+th, td { text-align: left; padding: 8px; border-bottom: 1px solid #30363d; font-size: 14px; }
 
-th, td {
-  text-align: left;
-  padding: 8px;
-  border-bottom: 1px solid #30363d;
-  font-size: 14px;
-}
-
-.small-btn {
-  width: auto;
-  padding: 6px 12px;
-  font-size: 13px;
-  margin: 0 4px 0 0;
-  display: inline-block;
-}
-
+.small-btn { width: auto; padding: 6px 12px; font-size: 13px; margin: 0 4px 0 0; display: inline-block; }
 .red { background: #ef4444; }
 .red:hover { background: #dc2626; }
 
 .note {
-  background: #1c2333;
-  border-left: 3px solid #f59e0b;
-  padding: 12px;
-  font-size: 13px;
-  color: #c9d1d9;
-  margin-top: 20px;
-  border-radius: 4px;
+  background: #1c2333; border-left: 3px solid #f59e0b; padding: 12px;
+  font-size: 13px; color: #c9d1d9; margin-top: 20px; border-radius: 4px;
 }
