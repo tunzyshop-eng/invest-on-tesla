@@ -39,13 +39,13 @@
     </div>
   </div>
 
-  <script src="script.js"></script>
+  <script src="client.js"></script>
   <script>
-    function handleLogin() {
+    async function handleLogin() {
       const name = document.getElementById("nameInput").value;
       if (!name.trim()) return alert("Please enter a name.");
 
-      const account = getAccount(name);
+      const account = await fetchAccount(name);
       document.getElementById("loginView").style.display = "none";
       document.getElementById("balanceView").style.display = "block";
       document.getElementById("welcomeMsg").textContent = "Welcome, " + name.trim();
