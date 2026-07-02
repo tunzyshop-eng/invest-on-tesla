@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>TeslaInvest (FAKE — Scam Demo)</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="warning-banner">⚠ EDUCATIONAL SCAM SIMULATION — NOT A REAL INVESTMENT PLATFORM ⚠</div>
+
+  <div class="container" id="loginView">
+    <h1>TeslaInvest</h1>
+    <div class="sub">Demo dashboard used to illustrate how fake investment platforms manipulate victims</div>
+    <input id="nameInput" type="text" placeholder="Enter your name">
+    <button onclick="handleLogin()">View My Balance</button>
+    <div class="note">
+      This page has no real connection to Tesla, any exchange, or any bank.
+      Whoever controls the admin panel can type in <em>any</em> number and
+      this page will display it as if it were a real, growing balance.
+      That's exactly the trick used in real investment scams: the "growth"
+      you see is not tied to any actual market or asset.
+    </div>
+  </div>
+
+  <div class="container" id="balanceView" style="display:none;">
+    <h1>TeslaInvest</h1>
+    <div class="sub" id="welcomeMsg"></div>
+    <div class="balance-display">
+      <div class="label">Portfolio Value (TSLA)</div>
+      <div class="amount" id="balanceAmount">$0.00</div>
+      <div class="ticker" id="changeTicker"></div>
+    </div>
+    <button onclick="location.reload()">Log Out</button>
+    <div class="note">
+      Reminder: this number was typed in manually by an "admin" — it does not
+      reflect any real stock price or account. Real platforms that let an
+      operator freely edit your visible balance, with no independent record
+      you can verify, are a major red flag for fraud.
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+  <script>
+    function handleLogin() {
+      const name = document.getElementById("nameInput").value;
+      if (!name.trim()) return alert("Please enter a name.");
+
+      const account = getAccount(name);
+      document.getElementById("loginView").style.display = "none";
+      document.getElementById("balanceView").style.display = "block";
+      document.getElementById("welcomeMsg").textContent = "Welcome, " + name.trim();
+
+      if (!account) {
+        document.getElementById("balanceAmount").textContent = formatMoney(0);
+        document.getElementById("changeTicker").textContent =
+          "No account found — ask the admin panel to add this name.";
+        return;
+      }
+
+      document.getElementById("balanceAmount").textContent = formatMoney(account.balance);
+      const el = document.getElementById("changeTicker");
+      if (account.lastChange > 0) {
+        el.textContent = "▲ " + formatMoney(account.lastChange) + " since last update";
+        el.className = "ticker up";
+      } else if (account.lastChange < 0) {
+        el.textContent = "▼ " + formatMoney(Math.abs(account.lastChange)) + " since last update";
+        el.className = "ticker down";
+      } else {
+        el.textContent = "No change since last update";
+      }
+    }
+  </script>
+</body>
+</html>
