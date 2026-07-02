@@ -1,0 +1,52 @@
+// script.js — shared logic for the SCAM SIMULATION DEMO
+// Educational purpose only: shows how fake "investment dashboards" work.
+// Data is stored in the browser's localStorage on YOUR machine only —
+// nothing is sent anywhere, there is no real money, no real Tesla stock data.
+
+const STORE_KEY = "scam_demo_accounts";
+
+function loadAccounts() {
+  const raw = localStorage.getItem(STORE_KEY);
+  return raw ? JSON.parse(raw) : {};
+}
+
+function saveAccounts(accounts) {
+  localStorage.setItem(STORE_KEY, JSON.stringify(accounts));
+}
+
+function getAccount(name) {
+  const accounts = loadAccounts();
+  const key = name.trim().toLowerCase();
+  return accounts[key] || null;
+}
+
+function setAccount(name, balance) {
+  const accounts = loadAccounts();
+  const key = name.trim().toLowerCase();
+  accounts[key] = {
+    displayName: name.trim(),
+    balance: Number(balance),
+    lastChange: 0
+  };
+  saveAccounts(accounts);
+}
+
+function adjustAccount(name, delta) {
+  const accounts = loadAccounts();
+  const key = name.trim().toLowerCase();
+  if (!accounts[key]) return;
+  accounts[key].balance = Math.max(0, accounts[key].balance + delta);
+  accounts[key].lastChange = delta;
+  saveAccounts(accounts);
+}
+
+function deleteAccount(name) {
+  const accounts = loadAccounts();
+  const key = name.trim().toLowerCase();
+  delete accounts[key];
+  saveAccounts(accounts);
+}
+
+function formatMoney(n) {
+  return "$" + Number(n).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+}
