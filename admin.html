@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Admin — TeslaInvest (FAKE — Scam Demo)</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="warning-banner">⚠ ADMIN PANEL — DEMO ONLY — THIS IS THE "SCAMMER'S CONTROL ROOM" ⚠</div>
+
+  <div class="container" style="max-width:640px;">
+    <h1>Admin Dashboard</h1>
+    <div class="sub">Set any name to any balance. This is the exact mechanism a scam operator uses.</div>
+
+    <input id="adminName" type="text" placeholder="Name">
+    <input id="adminBalance" type="number" placeholder="Balance (e.g. 5000)">
+    <button onclick="handleSetAccount()">Add / Set Balance</button>
+
+    <table id="accountsTable">
+      <thead>
+        <tr><th>Name</th><th>Balance</th><th>Adjust</th><th></th></tr>
+      </thead>
+      <tbody id="accountsBody"></tbody>
+    </table>
+
+    <div class="note">
+      Notice there is no verification step anywhere in this flow — no bank
+      link, no brokerage statement, no audit trail. In a real scam, this
+      is precisely how the "returns" a victim sees are produced: someone
+      on the other end simply edits a number.
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+  <script>
+    function refreshTable() {
+      const accounts = loadAccounts();
+      const body = document.getElementById("accountsBody");
+      body.innerHTML = "";
+      Object.values(accounts).forEach(acc => {
+        const tr = document.createElement("tr");
+        tr.innerHTML = `
+          <td>${acc.displayName}</td>
+          <td>${formatMoney(acc.balance)}</td>
+          <td>
+            <button class="small-btn" onclick="bump('${acc.displayName}', 250)">+$250</button>
+            <button class="small-btn" onclick="bump('${acc.displayName}', -250)">-$250</button>
+          </td>
+          <td><button class="small-btn red" onclick="remove('${acc.displayName}')">Delete</button></td>
+        `;
+        body.appendChild(tr);
+      });
+    }
+
+    function handleSetAccount() {
+      const name = document.getElementById("adminName").value;
+      const balance = document.getElementById("adminBalance").value;
+      if (!name.trim() || balance === "") return alert("Enter a name and balance.");
+      setAccount(name, balance);
+      document.getElementById("adminName").value = "";
+      document.getElementById("adminBalance").value = "";
+      refreshTable();
+    }
+
+    function bump(name, delta) {
+      adjustAccount(name, delta);
+      refreshTable();
+    }
+
+    function remove(name) {
+      deleteAccount(name);
+      refreshTable();
+    }
+
+    refreshTable();
+  </script>
+</body>
+</html>
