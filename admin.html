@@ -12,6 +12,7 @@
     <h1>Admin Dashboard</h1>
     <div class="sub">Set any name to any balance. This is the exact mechanism a scam operator uses.</div>
 
+    <input id="adminPassword" type="password" placeholder="Admin password">
     <input id="adminName" type="text" placeholder="Name">
     <input id="adminBalance" type="number" placeholder="Balance (e.g. 5000)">
     <button onclick="handleSetAccount()">Add / Set Balance</button>
@@ -23,6 +24,8 @@
       <tbody id="accountsBody"></tbody>
     </table>
 
+    <button class="small-btn" style="margin-top:12px;" onclick="refreshTable()">Refresh List</button>
+
     <div class="note">
       Notice there is no verification step anywhere in this flow — no bank
       link, no brokerage statement, no audit trail. In a real scam, this
@@ -31,13 +34,20 @@
     </div>
   </div>
 
-  <script src="script.js"></script>
+  <script src="client.js"></script>
   <script>
-    function refreshTable() {
-      const accounts = loadAccounts();
+    function getPassword() {
+      return document.getElementById("adminPassword").value;
+    }
+
+    async function refreshTable() {
+      const password = getPassword();
+      if (!password) return;
+      const accounts = await adminAction({ password, action: 'list' });
+      if (!accounts) return;
       const body = document.getElementById("accountsBody");
       body.innerHTML = "";
-      Object.values(accounts).forEach(acc => {
+      accounts.forEach(acc => {
         const tr = document.createElement("tr");
         tr.innerHTML = `
           <td>${acc.displayName}</td>
@@ -52,27 +62,32 @@
       });
     }
 
-    function handleSetAccount() {
+    async function handleSetAccount() {
+      const password = getPassword();
       const name = document.getElementById("adminName").value;
       const balance = document.getElementById("adminBalance").value;
+      if (!password) return alert("Enter the admin password.");
       if (!name.trim() || balance === "") return alert("Enter a name and balance.");
-      setAccount(name, balance);
+      const result = await adminAction({ password, action: 'set', name, balance });
+      if (!result) return;
       document.getElementById("adminName").value = "";
       document.getElementById("adminBalance").value = "";
       refreshTable();
     }
 
-    function bump(name, delta) {
-      adjustAccount(name, delta);
+    async function bump(name, delta) {
+      const password = getPassword();
+      if (!password) return alert("Enter the admin password.");
+      await adminAction({ password, action: 'adjust', name, delta });
       refreshTable();
     }
 
-    function remove(name) {
-      deleteAccount(name);
+    async function remove(name) {
+      const password = getPassword();
+      if (!password) return alert("Enter the admin password.");
+      await adminAction({ password, action: 'delete', name });
       refreshTable();
     }
-
-    refreshTable();
   </script>
 </body>
 </html>
